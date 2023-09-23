@@ -13,7 +13,6 @@ public class MouseListener implements NativeMouseInputListener {
 
     private Engine engine;
 
-    private int index = 0;
 
     public MouseListener(Engine engine) {
         this.engine = engine;
@@ -32,11 +31,10 @@ public class MouseListener implements NativeMouseInputListener {
             long releaseTime = System.currentTimeMillis();
             long clickDuration = releaseTime - pressTime;
 
-            if (clickDuration >= 500)
+            if (clickDuration >= Constants.MAX_ACCEPTABLE_DELAY || pressTime == 0)
                 return;
 
-            index += 1;
-            this.engine.setData((int)clickDuration, index);
+            this.engine.setData((int)clickDuration);
 
 
             System.out.println("Time between Left Mouse Click Press and Release: " + clickDuration + " milliseconds");

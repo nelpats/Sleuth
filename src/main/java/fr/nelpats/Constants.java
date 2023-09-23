@@ -4,6 +4,7 @@ public class Constants {
 
     public static final int MAX_SAMPLE = 100;
 
-    public static final String FILE_PATH = "click_data.csv";
+    public static final String FILE_PATH = "click_data";
 
+    public static final int MAX_ACCEPTABLE_DELAY = 200;
 }
