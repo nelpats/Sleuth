@@ -1,12 +1,8 @@
-package fr.nelpats.utils;
+package fr.nelpats.model.detection.recorder;
 
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseInputListener;
 import fr.nelpats.Constants;
-import fr.nelpats.model.detection.Engine;
-
-import java.lang.reflect.Array;
-import java.util.List;
 
 public class MouseListener implements NativeMouseInputListener {
     private long pressTime = 0;
@@ -34,7 +30,11 @@ public class MouseListener implements NativeMouseInputListener {
             if (clickDuration >= Constants.MAX_ACCEPTABLE_DELAY || pressTime == 0)
                 return;
 
-            this.engine.setData((int)clickDuration);
+            try {
+                this.engine.setData((int)clickDuration);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
 
 
             System.out.println("Time between Left Mouse Click Press and Release: " + clickDuration + " milliseconds");
