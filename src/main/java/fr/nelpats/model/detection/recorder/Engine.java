@@ -1,51 +1,49 @@
 package fr.nelpats.model.detection.recorder;
 
-import java.io.*;
-import java.util.Date;
-
+import com.github.kwhat.jnativehook.GlobalScreen;
+import com.github.kwhat.jnativehook.NativeHookException;
 import fr.nelpats.Constants;
-import com.opencsv.CSVWriter;
-import fr.nelpats.model.detection.methods.IsolationForest;
+import fr.nelpats.model.detection.methods.DetectionMethod;
 
 public class Engine {
 
-
-
         private double[] data = new double[Constants.MAX_SAMPLE];
-
-        private IsolationForest isolationForest;
-
+        private final DetectionMethod detectionMethod;
         private int index = 0;
-        public Engine() {
-
+        public Engine(DetectionMethod method) {
+            this.initMouseListener();
+            this.detectionMethod = method;
         }
 
 
-    public void writeToCSVFile() {
-        try (FileWriter fileWriter = new FileWriter(Constants.FILE_PATH + new Date().getTime() + ".csv");
-             CSVWriter csvWriter = new CSVWriter(fileWriter)) {
+        private void initMouseListener() {
+            MouseListener mouseListener = new MouseListener(this);
 
-            for (double value : this.data) {
-                String[] rowData = {String.valueOf(value)};
-                csvWriter.writeNext(rowData);
+            try {
+                GlobalScreen.registerNativeHook();
+            }
+            catch (NativeHookException ex) {
+                System.err.println("There was a problem registering the native hook.");
+                System.err.println(ex.getMessage());
+
+                System.exit(1);
             }
 
-            System.out.println("Array successfully written to CSV file: " + Constants.FILE_PATH);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error writing the array to CSV file: " + e.getMessage());
+            GlobalScreen.addNativeMouseListener(mouseListener);
         }
-    }
 
 
-        public void setData(int value) throws Exception {
+        public void resetData() {
+            this.data = new double[Constants.MAX_SAMPLE];
+        }
+
+        public void addData(int value) throws Exception {
             this.index += 1;
-            System.out.println("Index: " + this.index);
             if (this.index < Constants.MAX_SAMPLE) {
                 this.data[this.index] = value;
             } else {
-                this.isolationForest = new IsolationForest(this.data);
-                this.isolationForest.getDetection();
+                this.detectionMethod.setData(this.data);
+                this.detectionMethod.getDetection();
                 this.index = 0;
             }
 

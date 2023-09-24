@@ -7,7 +7,7 @@ import fr.nelpats.Constants;
 public class MouseListener implements NativeMouseInputListener {
     private long pressTime = 0;
 
-    private Engine engine;
+    private final Engine engine;
 
 
     public MouseListener(Engine engine) {
@@ -27,11 +27,15 @@ public class MouseListener implements NativeMouseInputListener {
             long releaseTime = System.currentTimeMillis();
             long clickDuration = releaseTime - pressTime;
 
+            if (clickDuration >= Constants.MAX_DELAY_BEFORE_RESET) {
+                this.engine.resetData();
+            }
+
             if (clickDuration >= Constants.MAX_ACCEPTABLE_DELAY || pressTime == 0)
                 return;
 
             try {
-                this.engine.setData((int)clickDuration);
+                this.engine.addData((int)clickDuration);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
