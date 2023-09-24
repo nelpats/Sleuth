@@ -18,7 +18,7 @@ import java.io.IOException;
 public class Main {
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
 
         Algorithm gpt = new Gpt();
