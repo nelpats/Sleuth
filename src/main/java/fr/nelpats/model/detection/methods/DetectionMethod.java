@@ -15,5 +15,7 @@ public abstract class DetectionMethod {
 
     public abstract boolean getDetection() throws Exception;
 
+    public abstract void setData(double[] inputData);
+
 
 }

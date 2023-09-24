@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Itori extends Algorithm {
 
-    private Random random = new Random(); // Create a single Random instance
+    private final Random random = new Random(); // Create a single Random instance
 
     @Override
     public int getDelay() {

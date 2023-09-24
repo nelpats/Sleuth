@@ -14,17 +14,9 @@ public class IsolationForest extends DetectionMethod{
 
     private double[] inputData;
 
-    public IsolationForest(double[] inputData) {
+    public IsolationForest() {
         super("IsolationForest");
-        this.inputData = inputData;
     }
-
-
-    private String getName() {
-        return super.name;
-    }
-
-
 
     public String sendRequest() throws Exception {
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -58,13 +50,14 @@ public class IsolationForest extends DetectionMethod{
     public boolean getDetection() throws Exception {
         Gson gson = new Gson();
         IsolationForestResponse response = gson.fromJson(sendRequest(), IsolationForestResponse.class);
-        System.out.println("[" + super.name + "]" + "Detection percentage: " + response.anomaliesPercent + "%");
+        System.out.println("[" + super.name + "] " + "Detection percentage: " + response.anomaliesPercent + "%");
 
-        if (response.anomaliesPercent >= 70.0D) {
-            return true;
-        }
+        return response.anomaliesPercent >= 70.0D;
 
-        return false;
+    }
 
+    @Override
+    public void setData(double[] inputData) {
+        this.inputData = inputData;
     }
 }

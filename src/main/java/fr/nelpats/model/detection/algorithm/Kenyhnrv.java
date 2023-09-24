@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Kenyhnrv extends Algorithm{
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     @Override
     public int getDelay() {
