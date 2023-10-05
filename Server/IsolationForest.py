@@ -2,8 +2,29 @@ from flask import Flask, request, jsonify
 import numpy as np
 from sklearn.ensemble import IsolationForest
 import csv
+import scipy.stats as stats
 
 app = Flask(__name__)
+
+
+
+@app.route("/heuristics", methods=['POST']):
+def heuristics():
+    try:
+        input_data = request.json['data']
+
+        response_data = {
+            "sample_size": len(input_data),
+            "stddev": np.std(input_data),
+            "kurtosis": stats.kurtosis(input_data),
+            
+        }
+
+        return jsonify(response_data)
+
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
