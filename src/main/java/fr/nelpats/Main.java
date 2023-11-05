@@ -7,6 +7,7 @@ import com.opencsv.CSVWriter;
 import fr.nelpats.model.detection.algorithm.Algorithm;
 import fr.nelpats.model.detection.algorithm.Gpt;
 import fr.nelpats.model.detection.algorithm.Kenyhnrv;
+import fr.nelpats.model.detection.methods.Csv;
 import fr.nelpats.model.detection.methods.DetectionMethod;
 import fr.nelpats.model.detection.methods.IsolationForest;
 import fr.nelpats.model.detection.recorder.Engine;
@@ -24,7 +25,7 @@ public class Main {
         Algorithm gpt = new Gpt();
         Algorithm keny = new Kenyhnrv();
 
-        Engine engine = new Engine(new IsolationForest());
+        Engine engine = new Engine(new Csv());
 
 
 
