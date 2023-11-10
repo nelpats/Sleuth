@@ -21,7 +21,7 @@ def predict(data) -> float:
         return round((len(anomalies) / len(data)) * 100, 2)
 
 
-st.title("Slauth")
+st.title("Sleuth")
 
 st.markdown("Check the anomaly score of a click sample !")
 
@@ -39,18 +39,13 @@ if uploaded_file is not None:
     anomaly_score = predict(df["clicks"])
     
     if anomaly_score < 45.00:
-            info_section.success(f"This sample is likely human ! (**{anomaly_score} %**)")     
+            info_section.success(f"This sample is likely human ✅ (Anomaly score: **{anomaly_score} % < 45%**)")     
     elif anomaly_score > 45.00 and anomaly_score < 65.00:
-            info_section.warning(f"This sample is suspicious, it might be fake 🤔 (**{anomaly_score} %**)")
+            info_section.warning(f"This sample is suspicious, it might be fake 🤔 (Anomaly score: **{anomaly_score} % < 65%**)")
     elif anomaly_score > 65.00:
-            info_section.error(f"This sample is fake ! (**{anomaly_score} %**)")
+            info_section.error(f"This sample is probaby unlegit ❌ (Anomaly score: **{anomaly_score} % > 65%**)")
                 
-    analytics = st.empty()
-    
-    analytics_checkbox = st.checkbox("Show analytics")   
-    
-    if analytics_checkbox:
-        info_section.scatter_chart(
+    st.scatter_chart(
                 df,
                 x=None,
                 y='clicks',
