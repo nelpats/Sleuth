@@ -22,7 +22,8 @@ The notebook goes in depth about why I did this and how I tested multiple algori
 
 The streamlit app is a data visualization app where you can upload click data as a csv file. Once uploaded you can see the proportion of anomalies in your dataset, as well as plot it.
 
-![streamlit_showcase](https://github.com/nelpats/Sleuth/assets/47573987/25b14819-28d7-4ef3-aa5a-f6196be5ef3d)
+![streamlit_showcase](https://github.com/nelpats/Sleuth/assets/47573987/8c1f9d5a-fc97-4204-90ae-57ae5ff5260a)
+
 
 
 
